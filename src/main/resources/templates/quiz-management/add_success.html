@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+<body>
+
+<!-- Include the navigation bar -->
+<div th:replace="fragments/navigation :: nav"></div>
+
+<!-- Main container for quiz management -->
+<main class="container mt-4">
+
+    <h1><span th:text="${quiz.title}"></span> was added successfully.</h1>
+
+</main>
+
+</body>
+</html>

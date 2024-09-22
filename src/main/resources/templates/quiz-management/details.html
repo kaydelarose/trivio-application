@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+<!-- Include the navigation bar -->
+<div th:replace="fragments/navigation :: nav"></div>
+
+<!-- Question list container -->
+<div class="question-detail-container">
+
+    <!-- Page title -->
+    <h1 class="page-title">Quiz Details</h1>
+
+    <div class="question-list">
+    <div class="question-list">
+        <!-- Iterate over each question -->
+        <div class="question-card" th:each="question : ${questions}">
+            <div class="question-card-header">
+                <span th:text="'Question ' + ${question.questionNumber} + ': ' + ${question.questionText}"></span>
+            </div>
+
+            <!-- Answers List -->
+            <div class="card-body">
+                <ul class="answer-list">
+                    <li class="answer-item" th:each="answer : ${question.answers}" th:classappend="${answer.isCorrect} ? 'correct-answer' : ''">
+                        <span th:text="${answer.answerText}"></span>
+                    </li>
+                </ul>
+
+                <div class="delete-question">
+                    <!-- Delete button with confirmation -->
+                    <form th:action="@{/quizzes/{quizId}/questions/delete/{questionId}(quizId=${quiz.quizId}, questionId=${question.questionId})}" method="post" onsubmit="return confirm('Are you sure you want to delete this AWESOME question? This action cannot be undone.')">
+                        <button type="submit" class="delete-button">Delete Question</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
