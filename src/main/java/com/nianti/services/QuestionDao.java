@@ -24,7 +24,6 @@ public class QuestionDao
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    // Fetch all questions by quizId
     public List<Question> getQuestionsByQuizId(int quizId)
     {
         List<Question> questions = new ArrayList<>();
@@ -38,16 +37,14 @@ public class QuestionDao
         while (row.next()) {
             Question question = mapRowToQuestion(row);
 
-            // Fetch the answers for each question
             List<Answer> answers = getAnswersByQuestionId(question.getQuestionId());
-            question.setAnswers(answers);  // Attach answers to the question
+            question.setAnswers(answers);  
 
             questions.add(question);
         }
         return questions;
     }
 
-    // Fetch a specific question by quiz_id and question_number:
     public Question getQuestion(int quizId, int questionNumber)
     {
         String sql = """
@@ -61,9 +58,8 @@ public class QuestionDao
         if (rowSet.next()) {
             Question question = mapRowToQuestion(rowSet);
 
-            // Fetch the answers for this question
             List<Answer> answers = getAnswersByQuestionId(question.getQuestionId());
-            question.setAnswers(answers);  // Attach answers to the question
+            question.setAnswers(answers);  
 
             return question;
         }
@@ -71,7 +67,6 @@ public class QuestionDao
         return null;
     }
 
-    // Map SQL row to a Question object:
     private Question mapRowToQuestion(SqlRowSet row)
     {
         int id = row.getInt("question_id");
@@ -82,7 +77,6 @@ public class QuestionDao
         return new Question(id, quiz, number, text);
     }
 
-    // Fetch all answers for a given questionId
     public List<Answer> getAnswersByQuestionId(int questionId)
     {
         String sql = """
@@ -107,7 +101,6 @@ public class QuestionDao
         return answers;
     }
 
-    // get total amount of questions from database:
     public int getTotalQuestionsByQuizId(int quizId)
     {
         String sql = "SELECT COUNT(*) FROM question WHERE quiz_id = ?";
@@ -115,20 +108,16 @@ public class QuestionDao
     }
 
 
-
-    // Delete a question by its questionId:
     public void deleteQuestion(int questionId)
     {
-        // Delete the answers associated with the question first to avoid foreign key issues
+
         String deleteAnswersSql = "DELETE FROM answer WHERE question_id = ?";
         jdbcTemplate.update(deleteAnswersSql, questionId);
 
-        // Now delete the question
         String deleteQuestionSql = "DELETE FROM question WHERE question_id = ?";
         jdbcTemplate.update(deleteQuestionSql, questionId);
     }
 
-    // Method to add a new question
     public void addQuestion(Question question)
     {
         String sql = """
@@ -136,17 +125,14 @@ public class QuestionDao
             VALUES (?, ?, ?);
         """;
 
-        // Insert the question into the database
         jdbcTemplate.update(sql, question.getQuizId(), question.getQuestionNumber(), question.getQuestionText());
 
-        // Insert answers as well
             for (Answer answer : getAnswersByQuestionId(question.getQuestionId()))
             {
                 addAnswer(answer, question.getQuestionId());
             }
     }
 
-    // Method to add an answer (associated with a question)
     public void addAnswer(Answer answer, int questionId)
     {
         String sql = """
@@ -154,7 +140,6 @@ public class QuestionDao
             VALUES (?, ?, ?);
         """;
 
-        // Insert the answer into the database
         jdbcTemplate.update(sql, questionId, answer.getAnswerText(), answer.isCorrect());
     }
 }
