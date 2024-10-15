@@ -7,7 +7,6 @@ public class Answer
     private String answerText;
     private boolean isCorrect;
 
-    // Declare constructors:
     public Answer()
     {}
 
@@ -19,7 +18,6 @@ public class Answer
         this.isCorrect = isCorrect;
     }
 
-    // Declare getters and setters:
 
     public int getAnswerId()
     {
