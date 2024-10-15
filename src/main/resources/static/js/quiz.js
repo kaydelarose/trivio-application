@@ -11,7 +11,6 @@ function startQuiz() {
     const startButton = document.getElementById("startButton");
     const quizId = startButton.getAttribute("data-quiz-id");  
 
-
     fetchTotalQuestions(quizId)
         .then(() => {
             startButton.addEventListener("click", () => {
