@@ -1,38 +1,38 @@
-let currentQuestionId = 1;  // Start with question 1
-let totalQuestions = 0;  // Initialize as 0 and update dynamically
+let currentQuestionId = 1; 
+let totalQuestions = 0;  
 let correctAnswers = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
     startQuiz();
 });
 
-// Function to start the quiz
+
 function startQuiz() {
     const startButton = document.getElementById("startButton");
-    const quizId = startButton.getAttribute("data-quiz-id");  // Extract quizId from the button
+    const quizId = startButton.getAttribute("data-quiz-id");  
 
-    // Fetch the total number of questions before starting the quiz
+
     fetchTotalQuestions(quizId)
         .then(() => {
             startButton.addEventListener("click", () => {
                 loadQuestion(quizId, currentQuestionId);
-                startButton.style.display = "none"; // Load the first question when the button is clicked
+                startButton.style.display = "none"; 
             });
         });
 }
 
-// Function to fetch total questions and set the totalQuestions variable
+
 function fetchTotalQuestions(quizId) {
-    return fetch(`/api/quiz/${quizId}/total-questions`)  // Assuming a new endpoint returning total number of questions
+    return fetch(`/api/quiz/${quizId}/total-questions`)  
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch total questions');
             }
-            return response.json();  // Expecting a JSON response with totalQuestions
+            return response.json(); 
         })
         .then(data => {
-            totalQuestions = data.totalQuestions;  // Assuming the response is { totalQuestions: X }
-            console.log("Total Questions: ", totalQuestions);  // For debugging
+            totalQuestions = data.totalQuestions; 
+            console.log("Total Questions: ", totalQuestions); 
         })
         .catch(error => console.error('Error fetching total questions:', error));
 }
@@ -43,13 +43,12 @@ function loadQuestion(quizId, questionId) {
             if (!response.ok) {
                 throw new Error('Failed to load question');
             }
-            return response.text();  // Fetch the Thymeleaf HTML fragment
+            return response.text(); 
         })
         .then(html => {
             const quizText = document.getElementById("quizText");
-            quizText.innerHTML = html;  // Inject the question fragment into the DOM
+            quizText.innerHTML = html; 
 
-            // Re-attach event listeners for answer buttons and the next button
             attachAnswerListeners(quizId);
         })
         .catch(error => console.error('Error:', error));
@@ -58,15 +57,13 @@ function loadQuestion(quizId, questionId) {
 function attachAnswerListeners(quizId) {
     const nextButton = document.getElementById("nextButton");
 
-    // Attach change event to all radio buttons
     document.querySelectorAll('input[name="answer"]').forEach((radio) => {
         radio.addEventListener('change', () => {
-            // Show the "Next" button when an answer is selected
+            
             nextButton.style.display = "block";
         });
     });
 
-    // Attach click event to the "Next" button
     nextButton.addEventListener('click', () => {
         const selectedAnswer = document.querySelector('input[name="answer"]:checked');
         if (selectedAnswer) {
@@ -76,7 +73,7 @@ function attachAnswerListeners(quizId) {
             selectAnswer(correctAnswer);
             loadNextQuestion(quizId);
         } else {
-            alert("Please select an answer!");  // Just in case no answer is selected
+            alert("Please select an answer!"); 
         }
     });
 }
@@ -86,18 +83,16 @@ function loadNextQuestion(quizId) {
     console.log("Current question ID: ", currentQuestionId);
     console.log("Total questions: ", totalQuestions);
 
-    // Load the next question if there are more
     if (currentQuestionId < totalQuestions) {
         currentQuestionId++;
         loadQuestion(quizId, currentQuestionId);
     } else {
-        // Show final message or score when the quiz is finished
+
         showFinalMessage();
     }
 }
 
 function selectAnswer(correctAnswerId) {
-    // Compare selected answer with the correct answer
     console.log("correctAnswerId: ", correctAnswerId)
     if (correctAnswerId == "true") {
         console.log("Correct answer!");
