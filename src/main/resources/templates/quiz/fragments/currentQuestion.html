@@ -1,14 +1,14 @@
 <div id="quizContent" xmlns:th="http://www.w3.org/1999/xhtml">
         <h2 class="quiz-question" th:text="${question.questionText}">Question text will go here</h2>
         <ul class="quiz-answers">
-            <!-- Loop through each answer and display it as a radio button with label -->
+ 
             <li class="quiz-answer" th:each="answer : ${question.answers}">
                 <input type="radio" th:attr="name='answer', value=${answer.answerId}, data-is-correct=${answer.isCorrect}"
                        id="answer-${answer.answerId}" class="quiz-radio">
                 <label class="quiz-label" th:for="'answer-' + ${answer.answerId}" th:text="${answer.answerText}"></label>
             </li>
         </ul>
-        <!-- The "Next" button will be hidden until an answer is selected -->
+
         <button id="nextButton" class="quiz-next-btn" style="display:none;">Next</button>
     </div>
 </div>
