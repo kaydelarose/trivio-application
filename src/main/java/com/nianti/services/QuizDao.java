@@ -25,7 +25,6 @@ public class QuizDao
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    // Return every quiz in database:
     public List<Quiz> getAllQuizzes()
     {
         ArrayList<Quiz> quizzes = new ArrayList<>();
@@ -45,7 +44,6 @@ public class QuizDao
         return quizzes;
     }
 
-    // Map a row to a Quiz object:
     private Quiz mapRowToQuiz(SqlRowSet row)
     {
         int id = row.getInt("quiz_id");
@@ -55,10 +53,8 @@ public class QuizDao
         return new Quiz(id, title, isLive);
     }
 
-    // Get a specific quiz:
     public Quiz getQuizById(int quizId) {
 
-        // string sql WHERE quiz_id = ?
         String sql = """
                 SELECT quiz_id
                     , quiz_title
@@ -75,7 +71,6 @@ public class QuizDao
         return null;
     }
 
-    // Fetch questions for a specific quiz
     private List<Question> getQuestionsByQuizId(int quizId) {
         List<Question> questions = new ArrayList<>();
         String sql = """
@@ -91,7 +86,6 @@ public class QuizDao
             question.setQuestionText(rowSet.getString("question_text"));
             question.setQuestionNumber(rowSet.getInt("question_number"));
 
-            // Fetch answers for each question using AnswerDao
             question.setAnswers(answerDao.getAnswersByQuestionId(question.getQuestionId()));
 
             questions.add(question);
@@ -101,25 +95,21 @@ public class QuizDao
     }
 
 
-    // Add a new quiz
     public void addQuiz(Quiz quiz) {
         String sql = "INSERT INTO quiz (quiz_title, is_live) VALUES (?, ?)";
         jdbcTemplate.update(sql, quiz.getTitle(), quiz.isLive());
     }
 
-    // Edit an existing quiz
     public void editQuiz(Quiz quiz) {
         String sql = "UPDATE quiz SET quiz_title = ?, is_live = ? WHERE quiz_id = ?";
         jdbcTemplate.update(sql, quiz.getTitle(), quiz.isLive(), quiz.getQuizId());
     }
 
-    // Delete a quiz by id
     public void deleteQuiz(int quizId) {
         String sql = "DELETE FROM quiz WHERE quiz_id = ?";
         jdbcTemplate.update(sql, quizId);
     }
 
-    // Toggle live status
     public void toggleLiveStatus(int quizId) {
         String sql = "UPDATE quiz SET is_live = NOT is_live WHERE quiz_id = ?";
         jdbcTemplate.update(sql, quizId);
