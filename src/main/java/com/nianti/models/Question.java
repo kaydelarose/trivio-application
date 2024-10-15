@@ -10,9 +10,8 @@ public class Question
     private int questionNumber;
     private String questionText;
 
-    private List<Answer> answers = new ArrayList<>();  // Initialize to avoid null
+    private List<Answer> answers = new ArrayList<>();  
 
-    // Declare constructors:
     public Question()
     {
         this.answers = new ArrayList<>();
@@ -27,7 +26,6 @@ public class Question
         this.answers = new ArrayList<>();
     }
 
-    // Declare getters and setters:
     public int getQuestionId()
     {
         return questionId;
