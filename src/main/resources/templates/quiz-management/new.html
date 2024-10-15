@@ -5,22 +5,17 @@
 
 <body>
 
-<!-- Navigation bar -->
 <div th:replace="fragments/navigation :: nav"></div>
 
-<!-- Main content area -->
 <div class="quiz-container">
     <h1 class="page-title">Add Quiz</h1>
 
-    <!-- Form to insert quiz information -->
     <form action="#" th:object="${quiz}" method="post" class="form-section">
-        <!-- Quiz Name -->
         <div class="form-group">
             <label th:for="*{title}" class="form-label">Quiz Name</label>
             <input class="form-control" type="text" th:field="*{title}" placeholder="Enter quiz name" required>
         </div>
 
-        <!-- Quiz Live Status -->
         <div class="form-group">
             <label th:for="*{live}" class="form-label">Live</label>
             <select class="form-control" th:field="*{live}" required>
@@ -29,7 +24,6 @@
             </select>
         </div>
 
-        <!-- Save and Cancel Buttons -->
         <div class="btn-group">
             <input class="save-button" type="submit" value="Save">
             <a class="cancel-button" href="/" role="button">Cancel</a>
