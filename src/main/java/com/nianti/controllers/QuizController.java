@@ -20,12 +20,10 @@ public class QuizController
 
     @Autowired QuestionDao questionDao;
 
-    // Display the quiz page:
     @GetMapping("/quiz/{quizId}")
     public String displayQuizById(@PathVariable int quizId, Model model)
     {
 
-        // Get quiz details:
         Quiz quiz          = quizDao.getQuizById(quizId);
         int totalQuestions = quiz.getQuestions().size();
 
@@ -36,7 +34,6 @@ public class QuizController
 
     }
 
-    // Load the given question for the given quiz:
     @GetMapping("/quiz/{quizId}/question/{questionId}")
     public String loadQuestion(@PathVariable int quizId, @PathVariable int questionId, Model model)
     {
