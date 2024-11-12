@@ -3,25 +3,21 @@
 
 <head th:replace="fragments/head :: head"></head>
 
-<!-- Link to external JavaScript for handling quiz logic -->
 <script src="/js/quiz.js"></script>
 
 <body>
 
-<!-- Navigation bar -->
 <div th:replace="fragments/navigation :: nav"></div>
 
-<!-- Main content area with styling similar to the homepage -->
+
 <div class="quiz-container">
     <h1 class="page-title" th:text="${quiz.title}"></h1>
 
-    <!-- Button to start the quiz with the same green styling as other buttons -->
     <button th:attr="data-quiz-id=${quiz.quizId}, data-total-questions=${totalQuestions}"
             class="nav-link" id="startButton">
         Start Quiz!
     </button>
 
-    <!-- This is where quiz questions and answers will be dynamically loaded -->
     <div id="quizText" class="quiz-list"></div>
 </div>
 

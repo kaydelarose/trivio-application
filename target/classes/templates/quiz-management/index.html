@@ -5,30 +5,23 @@
 
 <body>
 
-<!-- Include the navigation bar -->
 <div th:replace="fragments/navigation :: nav"></div>
-
-<!-- Main container for quiz management -->
+    
 <div class="container mt-4 quiz-container">
 
-    <!-- Page title -->
     <h1 class="page-title">Quiz Management</h1>
 
-    <!-- Button to add a new quiz -->
     <div class="mb-4">
         <a href="/quizzes/add" class="btn nav-link">Add New Quiz</a>
     </div>
 
-    <!-- List of quizzes with options to edit, delete, and manage live status -->
     <div class="quiz-list">
         <div class="card mb-2" th:each="quiz : ${quizzes}">
             <div class="quiz-title-container">
-                <!-- CHANGE THIS LINK TO THE DETAILS PAGE -->
                 <a th:href="@{/quizzes/{id}(id=${quiz.quizId})}" class="card-link">
                     <div class="card-header" th:text="${quiz.title}"></div>
                 </a>
 
-                <!-- Show quiz live status with dynamic color next to title -->
                 <div class="status-badge" th:if="${quiz.isLive}">
                     <span class="badge badge-success">Live</span>
                 </div>
@@ -37,7 +30,6 @@
                 </div>
             </div>
 
-            <!-- Toggle live status -->
             <div class="card-body">
                 <form th:action="@{/quizzes/toggle-live/{id}(id=${quiz.quizId})}" method="post" style="display:inline;">
                     <button type="submit" class="btn nav-link" th:classappend="${quiz.isLive} ? 'btn-danger' : 'btn-success'"
