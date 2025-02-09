@@ -52,14 +52,4 @@ Make sure you have the following installed:
 7. **Run the application**:
    ```bash
    mvn spring-boot:run
-
-
-## Future Enhancements
-
-- **Quiz Creation**: Adding functionality to create new quizzes directly from the front-end.
-- **Leaderboards**: Implementing global or category-specific leaderboards to track top scorers.
-- **Real-time Multiplayer Quizzes**: Allowing multiple users to take quizzes simultaneously and compete in real-time.
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
+   
